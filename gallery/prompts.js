@@ -25,10 +25,15 @@
     '10. site: 限定政府域名，逐个站内搜索',
   ]
 
+  // 元宝搜索：国内政务 / 党媒 / 公众号索引，能直接拿到公众号正文片段
+  const YUANBAO = [
+    '【元宝搜索】先用 character_profile_yuanbao_search 搜「姓名 + 地区 / 职务」「活动名 + 年份」「单位 + 年份」各一轮；它返回公众号、政府、党媒的结果卡片和正文片段（公众号卡片会带正文），能绕开 mp.weixin 的验证页。公众号正文来自元宝索引，可能是片段；引用前用官方同源版本核对。',
+  ]
+
   // 微信风控：公众号原文经常返回验证页，不能当正文用
   const WECHAT = [
     '【公众号链接怎么处理】mp.weixin.qq.com 经常返回「环境异常 / 完成验证 / 去验证」或 /mp/wappoc_appmsgcaptcha 页面，这不是文章内容：',
-    '- 先用 character_profile_wechat_search 按关键词 / 活动名 / 标题搜公众号（搜狗微信），拿到标题、摘要、发布时间和公众号名；摘要只是线索，不是全文。',
+    '- 先用 character_profile_yuanbao_search 搜公众号线索；再用 character_profile_wechat_search 按关键词 / 活动名 / 标题补标题、摘要、发布时间和公众号名。',
     '- 识别到上述验证特征，最多重试 1 次；仍失败就放弃该链接，不要反复抓同一个 URL。',
     '- 改用同源版本：区政府 / 区委官网、区委党校、北京组工网、北京号、区融媒体中心、部门官网、北京市政府网，以及主流媒体转载。',
     '- 搜索方法：拿文章标题做精确搜索，叠加 site:；或「活动名 + 日期 + 单位」。北京号版本不一定在 mp.weixin。',
@@ -80,6 +85,8 @@
         `- 检索精度：${precision(f.precision)}`,
         '- 旧版档案：开始前先调用 character_profile_read_dossier（name 填机构名称）查资料库有没有旧档；有就记下 id，保存时传 id 覆盖，不要重复建一份。',
         '',
+        ...YUANBAO,
+        '',
         ...MATRIX,
         '',
         ...(brief ? FLOOR_INST_BRIEF : FLOOR_INST_FULL),
@@ -108,6 +115,8 @@
       `- 部门／单位：${val(f.department, '未填写')}`,
       `- 检索精度：${precision(f.precision)}`,
       '- 旧版档案：开始前先调用 character_profile_read_dossier（name 填对象姓名）查资料库有没有旧档；有就记下 id，保存时传 id 覆盖，不要重复建一份。',
+      '',
+      ...YUANBAO,
       '',
       ...MATRIX,
       '',
@@ -173,7 +182,7 @@
       '【要求】',
       '1. 先建事件底稿：每条留事件编号、日期、身份、事项、本人动作、具体对象、出处、归因、两轴分及理由；多个转载合并，同一推进过程合成一条证据链。',
       '2. 只据公开信息编码，不按职级、学历、地点、行业关键词或象限反推权限与人格；证据不足就标「证据不足」，不造点。',
-      '2b. 公众号（mp.weixin.qq.com）返回「环境异常 / 去验证 / wappoc_appmsgcaptcha」时，最多重试 1 次就放弃；可以先用 character_profile_wechat_search 搜标题 / 摘要拿线索，再改用区政府 / 区委党校 / 北京组工网 / 北京号 / 融媒体等可访问的同源版本，不要卡在验证页。',
+      '2b. 公众号（mp.weixin.qq.com）返回「环境异常 / 去验证 / wappoc_appmsgcaptcha」时，最多重试 1 次就放弃；先用 character_profile_yuanbao_search 搜标题 / 活动 / 公众号线索，再用 character_profile_wechat_search 补标题 / 摘要，最后改用区政府 / 区委党校 / 北京组工网 / 北京号 / 融媒体等可访问的同源版本，不要卡在验证页。',
       '3. 卡面以 skill 的 assets/layout-example.html 作视觉参照，但必须替换全部内容；固定 1080×1440，克莱因蓝外框、白色主体；右上角只写「地区 / PROFILE」，PROFILE 后面不加编号；四象限类型说明用固定文案，恰好两行。',
       '4. 卡面写成单文件 HTML（内联样式，中文字体用本机有的），调用 character_profile_save_card 保存：html 传完整 HTML，同时填 name / title / subtitle / type / confidence / stars / region / period / dossierId。工具会渲染 PNG、存进「人物画像库」并让页面弹出预览，不要自己截图。',
       '5. 存好后告诉我：已存到「人物画像库」，并附关键依据（可点击的原文链接）。',

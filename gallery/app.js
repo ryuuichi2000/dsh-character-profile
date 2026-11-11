@@ -358,7 +358,7 @@ function viewResearch() {
   const ready = mode === 'institution' ? Boolean(f.org.trim()) : Boolean(f.name.trim() || f.department.trim() || f.region.trim())
   const busy = jobs.some((j) => j.kind === 'research' && (j.status === 'running' || j.status === 'queued'))
   const people = [...new Set(data.dossiers.filter((d) => d.kind !== 'institution').map((d) => d.name))].slice(0, 8)
-  return `${head('资料搜集', '资料搜集', '查人物，或者查一个机构里的主要人物。选好检索精度，点「开始搜集」就在后台跑，不用跳对话。公众号原文被验证页拦截时，会自动改用政府 / 党校 / 北京号同源版本。')}
+  return `${head('资料搜集', '资料搜集', '查人物，或者查一个机构里的主要人物。选好检索精度，点「开始搜集」就在后台跑，不用跳对话。公众号原文被验证页拦截时，会先用元宝 / 搜狗搜线索，再改用政府 / 党校 / 北京号同源版本。')}
     ${banner()}${pendingNote('research')}${jobPanel('research')}
     <div class="grid2">
       <div class="panel">

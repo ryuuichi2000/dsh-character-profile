@@ -42,6 +42,7 @@
    - `character_profile_save_card` — 传 HTML，插件在 Host 进程里用浏览器渲染成 1080×1440 PNG 再入库（模型不需要自己截图）
    - `character_profile_read_dossier` — 做卡前先读资料库里的档案
    - `character_profile_library` — 看两个库里都有什么
+   - `character_profile_yuanbao_search` — 用元宝搜索（so.qq.com）搜公开网页 / 公众号 / 媒体结果；公众号卡片带正文片段，能绕开 mp.weixin 验证页，但引用前要用官方同源版本核对
    - `character_profile_wechat_search` — 用搜狗微信搜公众号文章，返回标题 / 摘要 / 发布时间 / 公众号名 / 跳转链接；只作线索，正文仍找同源官方版本（见下）
 5. 任务结束时页面自动刷新资料库：有新卡就弹预览并提示「已存到人物画像库」，有档案就提示入库。
 
@@ -59,7 +60,7 @@
 
 资料库每行下面会直接显示 `12 活动 · 10 源 · 3 官方`，机构档案显示 `3 位人物 · 8 活动 · 8 源`，一眼能看出哪份没查够。
 
-**公众号链接（mp.weixin.qq.com）**：微信风控经常返回「环境异常 / 去验证」或 `wappoc_appmsgcaptcha` 页面，这不是文章正文，插件不会反复抓。先用 `character_profile_wechat_search`（搜狗微信）按关键词 / 活动名 / 标题搜到公众号文章的标题、摘要、发布时间和公众号名；摘要只作线索，正文改用区政府 / 区委党校 / 北京组工网 / 北京号 / 区融媒体等可访问的同源版本。识别到验证页最多重试 1 次；公众号链接只作线索，找不到同源版本的这条活动不收，避免凭标题猜内容。
+**公众号链接（mp.weixin.qq.com）**：微信风控经常返回「环境异常 / 去验证」或 `wappoc_appmsgcaptcha` 页面，这不是文章正文，插件不会反复抓。先用 `character_profile_yuanbao_search`（元宝搜索）搜「姓名 + 地区/职务」「活动名 + 年份」，它会返回公众号、政府、党媒的结果卡片，公众号卡片带正文片段；再用 `character_profile_wechat_search`（搜狗微信）补标题、摘要、发布时间和公众号名。公众号正文来自元宝索引，可能是片段，引用前用区政府 / 区委党校 / 北京组工网 / 北京号 / 区融媒体等可访问的同源版本核对。识别到验证页最多重试 1 次；公众号链接只作线索，找不到同源版本的这条活动不收。
 
 ## 内置的两个 skill
 
@@ -68,7 +69,7 @@
 - `skills/人物资料搜集/`（注册名 **`person-dossier`**）— 七条硬约束、检索矩阵、按任职阶段逐段检索、双源核验、五章档案格式、覆盖度下限。`references/` 和 `templates/` 都在。dsh 只接受 kebab-case 的 skill 名，所以中文名只作为标题和目录名保留。
 - `skills/governance-portrait/` — 议题 / 治理风格 / 分管职责三元框架，两轴四象限编码，克莱因蓝 1080×1440 卡；`assets/layout-example.html` 是版式参照。
 
-加载 skill 正文时会在末尾补一段「在这个插件里怎么交付」，说明用上面五个工具，而不是把文件写到工作区。
+加载 skill 正文时会在末尾补一段「在这个插件里怎么交付」，说明用上面六个工具，而不是把文件写到工作区。
 
 ## 安装 / 卸载
 
@@ -131,11 +132,12 @@ node scripts/make-icon.mjs      # 重新生成 icon.png
 ├─ package.json          dsh.bundle.patch + dsh.client 声明
 ├─ cordis.patch.yml      Host 半边入口
 ├─ lib/
-│  ├─ index.js           skill 提供方、五个工具、后台执行器、webServer 路由
+│  ├─ index.js           skill 提供方、六个工具、后台执行器、webServer 路由
 │  ├─ client.js          侧栏入口 + iframe + 转发主题 / 开新对话（兜底）
 │  ├─ http.js            页面接口（目录、增删改查、上传、示例、后台任务）
 │  ├─ store.js           资料库 / 画像库的读写（原子写）
-│  ├─ tools.js           五个模型工具（含保存前覆盖度检查、公众号检索）
+│  ├─ tools.js           六个模型工具（含保存前覆盖度检查、元宝 / 搜狗检索）
+│  ├─ yuanbao.js         元宝搜索（so.qq.com）结果卡片解析
 │  ├─ wechat.js          搜狗微信检索（公众号标题 / 摘要 / 日期 / 账号）
 │  ├─ coverage.js        档案覆盖度统计 + 入库下限
 │  ├─ runner.js          进程内后台 agent（一键执行，不跳对话）

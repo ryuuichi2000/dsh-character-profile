@@ -15,3 +15,6 @@ hou-shixi-card.html
 *.tgz
 *.log
 .npmrc
+
+# 本地发布辅助脚本（不是插件的一部分）
+scripts/npm-web-login.mjs
