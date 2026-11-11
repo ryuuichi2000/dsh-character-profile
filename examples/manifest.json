@@ -1,0 +1,27 @@
+{
+  "examples": [
+    {
+      "id": "ex-dossier-yunxi",
+      "kind": "dossier",
+      "title": "区级产业部门负责人资料档案",
+      "name": "沈望舒",
+      "summary": "按「人物资料搜集」skill 的五章格式做的完整档案：基本信息、现任职务、职务任免、履历、分四个任职阶段的公开活动与发言，含双源核验与引语原文。",
+      "meta": "区县级 · 云溪区经信局 · 虚构示例",
+      "file": "dossier-shenwangshu.md",
+      "tags": ["区级", "经信", "游戏电竞"]
+    },
+    {
+      "id": "ex-card-yunxi",
+      "kind": "card",
+      "title": "沈望舒｜人物画像卡",
+      "name": "沈望舒",
+      "summary": "按「人物画像卡」skill 做的 1080×1440 克莱因蓝卡：左侧治理风格、固定双行说明与游戏企业支持度，右侧两轴四象限图；01 履历轨迹、02 公开表态、未来预测与关注领域雷达。",
+      "meta": "事务推进型 · 4 星 · 虚构示例",
+      "file": "portrait-shenwangshu.png",
+      "html": "portrait-shenwangshu.html",
+      "width": 1080,
+      "height": 1440,
+      "tags": ["画像卡", "事务推进型"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# 依赖 / 本地状态
+node_modules/
+.devhome/
+.screenshots/
+
+# 开发期截图（含真实人物数据，不公开）
+.shots/
+_qa*.png
+
+# 真实人物资料：绝不入库、不发布
+hou-shixi-card.html
+北京市石景山区重点人物资料-*.md
+
+# 打包产物 / 日志
+*.tgz
+*.log
+.npmrc

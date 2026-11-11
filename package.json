@@ -1,0 +1,63 @@
+{
+  "name": "dsh-character-profile",
+  "version": "0.4.2",
+  "description": "人物情报库 · DeepSeek Harness 插件：人物资料库、人物画像库、资料搜集与画像制作。内置「人物资料搜集」与「人物画像卡」两个 skill，检索到的档案和生成的克莱因蓝 1080×1440 画像卡都收在侧栏里。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "icon": "./icon.png",
+  "files": [
+    "lib",
+    "gallery",
+    "examples",
+    "skills",
+    "cordis.patch.yml",
+    "icon.png",
+    "LICENSE",
+    "README.md"
+  ],
+  "displayName": "人物情报库",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "character-profile",
+    "dossier",
+    "knowledge-base",
+    "research",
+    "ui",
+    "tool",
+    "document"
+  ],
+  "author": "lilongyi",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.1-rc.2 <0.4.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "playwright": {
+      "optional": true
+    }
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,5 @@
+# 人物情报库：Host 半边（两个 skill 的提供方、资料库 / 画像库接口、四个模型工具）。
+# 浏览器半边由 package.json 的 dsh.client 声明加载（lib/client.js）。
+- insert:
+    - id: character-profile
+      name: 'dsh-character-profile'

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN" data-scheme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人物情报库</title>
+<script src="scheme.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <a class="brand" href="#/dossiers">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3" width="17" height="18"/><circle cx="12" cy="10" r="2.6"/><path d="M7.5 18c.7-2.2 2.4-3.4 4.5-3.4s3.8 1.2 4.5 3.4"/></svg>
+      </span>
+      <span><span class="brand-name">人物情报库</span><span class="brand-sub">dsh-character-profile</span></span>
+    </a>
+    <nav class="nav" aria-label="导航">
+      <div class="nav-group">资料与画像</div>
+      <a href="#/dossiers" data-view="dossiers"><i data-icon="library"></i>人物资料库<span class="nav-count" data-count="dossiers"></span></a>
+      <a href="#/cards" data-view="cards"><i data-icon="cards"></i>人物画像库<span class="nav-count" data-count="cards"></span></a>
+      <div class="nav-group">工作台</div>
+      <a href="#/research" data-view="research"><i data-icon="research"></i>资料搜集</a>
+      <a href="#/create" data-view="create"><i data-icon="create"></i>画像制作</a>
+      <div class="nav-group">参考</div>
+      <a href="#/examples" data-view="examples"><i data-icon="book"></i>官方示例</a>
+    </nav>
+    <div class="rail-foot" id="rail-foot"></div>
+  </aside>
+  <main class="main" id="app"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+  <div class="viewer-bar">
+    <span class="viewer-title" id="viewer-title"></span>
+    <span class="viewer-note" id="viewer-note"></span>
+    <span class="viewer-actions" id="viewer-actions" hidden></span>
+    <button class="ibtn" data-viewer="full" title="全屏" aria-label="全屏"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="ibtn" data-viewer="close" title="关闭（Esc）" aria-label="关闭"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div class="viewer-body" id="viewer-body"></div>
+</div>
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" id="modal-card" role="dialog" aria-modal="true"></div>
+</div>
+<input type="file" id="file" hidden>
+<script src="prompts.js"></script>
+<script src="markdown.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

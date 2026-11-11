@@ -1,0 +1,43 @@
+/* 人物情报库 · 设计 token。与侧栏「歸藏设计」同一套瑞士风：灰阶底 + 纸色卡片 + 墨色，直角、1px 细线、等宽小字标签。
+   底色 / 纸色 / 墨色 / 线条 / 强调色都从这里取，页面样式只写版式。 */
+:root{
+  --font-display:'Inter','Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;
+  --font-sans:'Inter','Noto Sans SC','PingFang SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','Noto Sans SC',ui-monospace,'SF Mono',Menlo,monospace;
+  --sp-1:2px; --sp-2:4px; --sp-3:8px; --sp-4:12px; --sp-5:16px; --sp-6:24px;
+  --sp-7:32px; --sp-8:40px; --sp-9:48px; --sp-10:64px; --sp-11:80px; --sp-12:96px;
+  --paper:#fafaf8;
+  --paper-2:#f0f0ee;
+  --ink:#0a0a0a;
+  --muted:#737373;
+  --grey-1:#f0f0ee;
+  --grey-2:#d4d4d2;
+  --grey-3:#737373;
+  --accent:#002FA7;
+  --accent-on:#ffffff;
+  --accent-bright:#5B7BFF;
+  --accent-deep:#001d6b;
+  --accent-soft:#d5deef;
+  --text-primary:#0a0a0a;
+  --text-body:#252524;
+  --text-secondary:#525252;
+  --text-helper:#737373;
+  --text-placeholder:#a3a3a3;
+  --line-strong:#a3a3a3;
+  --line:#d4d4d2;
+  --line-subtle:#e0e0e0;
+  --fw-display:300;
+  --ease-standard:cubic-bezier(.2,0,.38,.9);
+  --dur-fast:110ms;
+  --dur-moderate:240ms;
+  color-scheme:light;
+}
+/* 暗色：只换中性色，克莱因蓝强调色保持 */
+:root[data-scheme="dark"]{
+  --paper:#1b1b1a; --paper-2:#232322; --grey-1:#111110; --grey-2:#4a4a48;
+  --ink:#f2f2f0; --text-primary:#f2f2f0; --text-body:#dcdcda; --text-secondary:#b4b4b1;
+  --text-helper:#8c8c89; --text-placeholder:#6b6b68;
+  --line-strong:#5c5c5a; --line:#3a3a38; --line-subtle:#2b2b2a;
+  --accent:#5B7BFF; --accent-on:#0a0a0a; --accent-soft:#26345c;
+  color-scheme:dark;
+}
