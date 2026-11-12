@@ -46,7 +46,7 @@ const DEFAULT = {
   cardQ: '',
   cardOrigin: 'all',
   research: { mode: 'person', name: '', region: '', department: '', org: '', precision: 'full' },
-  create: { mode: 'dossier', name: '', region: '', department: '', role: '', period: '', focus: '', material: '', dossierId: '', pickQ: '' },
+  create: { mode: 'dossier', name: '', region: '', department: '', role: '', period: '', focus: '', material: '', dossierId: '', pickQ: '', pickOpen: false },
   pending: null,
   lastCardId: '',
   hiddenJob: '',
@@ -430,20 +430,44 @@ function createReady() {
   return Boolean(c.name.trim())
 }
 function pickList() {
-  const q = state.create.pickQ.trim().toLowerCase()
+  const c = state.create
+  const q = c.pickQ.trim().toLowerCase()
   const people = data.dossiers.filter((d) => d.kind !== 'institution')
   const list = people.filter((d) => !q || [d.name, d.region, d.department].join(' ').toLowerCase().includes(q))
-  if (!people.length) return `<div class="empty" style="padding:32px">资料库里还没有人物档案。<a href="#/research" style="text-decoration:underline">先去资料搜集</a>，或改用「只输姓名」；机构档案里的人物请用「只输姓名」填名字。</div>`
-  if (!list.length) return `<div class="empty" style="padding:24px">没有匹配的人物档案</div>`
-  return `<div class="pick-list">${list
-    .map(
-      (d) => `<button class="pick" data-pick="${d.id}" aria-pressed="${state.create.dossierId === d.id}">
-      <span class="pick-box">${state.create.dossierId === d.id ? '✓' : ''}</span>
+  if (!people.length) return `<div class="pick-wrap" id="pick-wrap"><div class="empty" style="padding:32px">资料库里还没有人物档案。<a href="#/research" style="text-decoration:underline">先去资料搜集</a>，或改用「只输姓名」；机构档案里的人物请用「只输姓名」填名字。</div></div>`
+  if (!list.length) return `<div class="pick-wrap" id="pick-wrap"><div class="empty" style="padding:24px">没有匹配的人物档案</div></div>`
+  const LIMIT = 6
+  const SEARCH_LIMIT = 20
+  const expanded = Boolean(c.pickOpen)
+  const selected = list.find((d) => d.id === c.dossierId)
+  let visible = expanded || q ? list : list.slice(0, LIMIT)
+  if (!expanded && !q && selected && !visible.some((d) => d.id === selected.id)) {
+    visible = [selected, ...list.filter((d) => d.id !== selected.id).slice(0, LIMIT - 1)]
+  }
+  const shown = q ? visible.slice(0, SEARCH_LIMIT) : visible
+  const toggle =
+    !q && list.length > LIMIT
+      ? `<button type="button" class="pick-more" data-pick-more>${expanded ? `收起，只显示前 ${LIMIT} 位` : `展开全部 ${list.length} 位`}</button>`
+      : ''
+  const toggleBottom =
+    !q && list.length > LIMIT
+      ? `<button type="button" class="pick-more bottom" data-pick-more>${expanded ? '收起' : `展开全部 ${list.length} 位`}</button>`
+      : ''
+  const note = q && list.length > SEARCH_LIMIT ? `<p class="hint">匹配较多，先显示前 ${SEARCH_LIMIT} 位，继续输入缩小范围。</p>` : ''
+  return `<div class="pick-wrap" id="pick-wrap">
+    ${toggle}
+    <div class="pick-list${expanded || q ? ' open' : ''}">${shown
+      .map(
+        (d) => `<button type="button" class="pick" data-pick="${d.id}" aria-pressed="${c.dossierId === d.id}">
+      <span class="pick-box">${c.dossierId === d.id ? '✓' : ''}</span>
       <span><span class="pick-name">${esc(d.name)}</span><span class="pick-sub" style="display:block">${esc([d.region, d.department].filter(Boolean).join(' · ') || '未填地区')}</span></span>
       <span class="pick-meta">${d.chars} 字</span>
     </button>`,
-    )
-    .join('')}</div>`
+      )
+      .join('')}</div>
+    ${toggleBottom}
+    ${note}
+  </div>`
 }
 function viewCreate() {
   const c = state.create
@@ -1048,6 +1072,14 @@ document.addEventListener('click', async (e) => {
 
   // 画像制作
   if (b.dataset.mode) { state.create.mode = b.dataset.mode; return render() }
+  if (b.dataset.pickMore !== undefined) {
+    state.create.pickOpen = !state.create.pickOpen
+    persist()
+    const wrap = $('#pick-wrap')
+    if (wrap) wrap.outerHTML = pickList()
+    else render()
+    return
+  }
   if (b.dataset.pick) {
     const d = data.dossiers.find((x) => x.id === b.dataset.pick)
     if (!d) return
@@ -1255,13 +1287,8 @@ document.addEventListener('input', (e) => {
   }
   if (t.id === 'pq') {
     state.create.pickQ = t.value
-    const list = $('.pick-list')
-    if (list) {
-      const wrap = document.createElement('div')
-      wrap.innerHTML = pickList()
-      const next = wrap.querySelector('.pick-list') || wrap.firstElementChild
-      if (next) list.replaceWith(next)
-    }
+    const wrap = $('#pick-wrap')
+    if (wrap) wrap.outerHTML = pickList()
     return
   }
   if (t.dataset.r) {

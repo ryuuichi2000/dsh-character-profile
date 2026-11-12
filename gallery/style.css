@@ -188,7 +188,12 @@ svg.ic { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none
 .chip:hover { border-color: var(--ink); color: var(--ink); }
 
 /* 资料库选人 */
-.pick-list { display: flex; flex-direction: column; border: 1px solid var(--line-subtle); background: var(--paper); max-height: 320px; overflow: auto; }
+.pick-wrap { display: block; }
+.pick-more { display: block; width: 100%; margin-bottom: 8px; padding: 9px var(--sp-3); background: var(--grey-1); border: 1px dashed var(--line-subtle); color: var(--text-secondary); font-size: 12px; text-align: center; cursor: pointer; }
+.pick-more:hover { border-color: var(--accent); color: var(--ink); background: var(--accent-soft); }
+.pick-more.bottom { margin: 8px 0 0; }
+.pick-list { display: flex; flex-direction: column; border: 1px solid var(--line-subtle); background: var(--paper); max-height: 360px; overflow: auto; }
+.pick-list.open { max-height: none; overflow: visible; }
 .pick { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: var(--sp-3); align-items: center; padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--line-subtle); text-align: left; }
 .pick:first-child { border-top: 0; }
 .pick:hover { background: var(--grey-1); }
