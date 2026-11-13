@@ -220,7 +220,7 @@ function toast(text) {
 }
 
 const LEVELS = ['省级', '地市级', '区县级', '其他']
-const LEVEL_HINT = '直辖市按省级归类：北京市级 = 省级，北京市朝阳区 = 区县级；苏州市级 = 地市级。'
+const LEVEL_HINT = '按干部级别归类：直辖市本级 = 省级；直辖市下辖区县 = 正厅级，归地市级（北京市朝阳区 = 地市级）；副省级市的区 = 副厅级，也归地市级；地级市 / 副省级市 = 地市级；普通地级市的区县 / 县级市 = 区县级。'
 const ORIGINS = [
   ['all', '全部'],
   ['researched', '调研'],
@@ -358,7 +358,7 @@ function viewResearch() {
   const ready = mode === 'institution' ? Boolean(f.org.trim()) : Boolean(f.name.trim() || f.department.trim() || f.region.trim())
   const busy = jobs.some((j) => j.kind === 'research' && (j.status === 'running' || j.status === 'queued'))
   const people = [...new Set(data.dossiers.filter((d) => d.kind !== 'institution').map((d) => d.name))].slice(0, 8)
-  return `${head('资料搜集', '资料搜集', '查人物，或者查一个机构里的主要人物。选好检索精度，点「开始搜集」就在后台跑，不用跳对话。公众号原文被验证页拦截时，会先用元宝 / 搜狗搜线索，再改用政府 / 党校 / 北京号同源版本。')}
+  return `${head('资料搜集', '资料搜集', '查人物，或者查一个机构里的主要人物。选好检索精度，点「开始搜集」就在后台跑，不用跳对话。')}
     ${banner()}${pendingNote('research')}${jobPanel('research')}
     <div class="grid2">
       <div class="panel">
@@ -407,7 +407,7 @@ function viewResearch() {
       ${
         data.dossiers.length
           ? `<div class="table">${data.dossiers
-              .slice(0, 5)
+              .slice(0, 1)
               .map(
                 (d) => `<div class="row" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1.4fr) 96px auto">
             <div><div class="r-title">${esc(d.name)} ${d.kind === 'institution' ? '<span class="tag">机构</span>' : ''}</div><div class="r-sub">${esc(d.summary || '')}</div></div>

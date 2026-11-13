@@ -1,6 +1,6 @@
 {
   "name": "dsh-character-profile",
-  "version": "0.5.1",
+  "version": "0.6.1",
   "description": "人物情报库 · DeepSeek Harness 插件：人物资料库、人物画像库、资料搜集与画像制作。内置「人物资料搜集」与「人物画像卡」两个 skill，检索到的档案和生成的克莱因蓝 1080×1440 画像卡都收在侧栏里。",
   "type": "module",
   "main": "lib/index.js",
