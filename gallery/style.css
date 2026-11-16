@@ -97,6 +97,7 @@ svg.ic { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none
 .row .r-num { font-family: var(--font-mono); font-size: 11px; color: var(--text-helper); text-align: right; }
 .row .r-act { display: flex; gap: var(--sp-2); justify-content: flex-end; }
 .row-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.5fr) 86px 96px auto; gap: var(--sp-5); padding: 0 var(--sp-5) var(--sp-3); color: var(--text-helper); }
+.row-head .r-num { text-align: right; }
 .row-head span:last-child { text-align: right; }
 .tag { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border: 1px solid var(--line); color: var(--text-secondary); font-size: 11px; white-space: nowrap; }
 .tag.blue { border-color: var(--accent); color: var(--accent); }

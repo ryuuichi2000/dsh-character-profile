@@ -246,7 +246,7 @@ function dossierRows() {
     return `<div class="empty"><div class="empty-title">${state.q ? '没有匹配的档案' : '还没有人物 / 机构档案'}</div>${
       state.q ? '换个姓名、地区、单位或正文里的词再搜。' : '去「资料搜集」让模型按 skill 建一份，或把现成的 Markdown 拖进来。'
     }</div>`
-  return `<div class="row-head mono"><span>名称 / 摘要</span><span>地区 · 单位</span><span>层级</span><span>篇幅</span><span>操作</span></div>
+  return `<div class="row-head mono"><span>名称</span><span>地区 / 单位</span><span>层级</span><span class="r-num">篇幅</span><span></span></div>
     <div class="table">${list
       .map(
         (d) => `<div class="row">
@@ -280,7 +280,6 @@ function viewDossiers() {
       <div class="pills" style="margin-left:0">${ORIGINS.map(([k, l]) => `<button class="pill" data-origin="${k}" aria-pressed="${state.origin === k}">${l}</button>`).join('')}</div>
       <span class="mono" style="margin-left:auto;color:var(--text-helper)" id="dossier-count">${(searchHits || data.dossiers).filter(dossierMatches).length} 份</span>
     </div>
-    <p class="list-note" style="margin-top:-4px;margin-bottom:12px">${esc(LEVEL_HINT)}</p>
     <div id="dossier-list">${dossierRows()}</div>`
 }
 
@@ -808,7 +807,6 @@ async function openDossierEditor(id) {
        <label class="field"><span class="label">地区</span><input class="input" name="region" value="${esc(d.region || '')}"></label>
        <label class="field"><span class="label">部门／单位</span><input class="input" name="department" value="${esc(d.department || '')}"></label>
      </div>
-     <p class="hint" style="margin-top:8px">${esc(LEVEL_HINT)}</p>
      <label class="field" style="margin-top:12px"><span class="label">关注方向 / 主要人物（逗号分隔）</span><input class="input" name="tags" value="${esc((d.tags || []).join('、'))}"></label>
      <label class="field" style="margin-top:12px"><span class="label">档案正文（Markdown）<b>*</b></span><textarea class="textarea" name="content" rows="12" spellcheck="false">${esc(d.content || '')}</textarea></label>
      <div class="modal-actions">
