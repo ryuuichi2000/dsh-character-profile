@@ -246,8 +246,7 @@ function dossierRows() {
     return `<div class="empty"><div class="empty-title">${state.q ? '没有匹配的档案' : '还没有人物 / 机构档案'}</div>${
       state.q ? '换个姓名、地区、单位或正文里的词再搜。' : '去「资料搜集」让模型按 skill 建一份，或把现成的 Markdown 拖进来。'
     }</div>`
-  return `<div class="row-head mono"><span>名称</span><span>地区 / 单位</span><span>层级</span><span class="r-num">篇幅</span><span></span></div>
-    <div class="table">${list
+  return `<div class="table">${list
       .map(
         (d) => `<div class="row">
       <div>
